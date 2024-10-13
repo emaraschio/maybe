@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  http_basic_authenticate_with name: ENV.fetch("BASIC_AUTH_USER"), password: ENV.fetch("BASIC_AUTH_PASSWORD")
   include Localize, AutoSync, Authentication, Invitable, SelfHostable, StoreLocation
   include Pagy::Backend
 

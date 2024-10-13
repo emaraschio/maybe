@@ -2,11 +2,11 @@
 ## ---
 
 # Define variables
-DOCKER_COMPOSE = docker compose
+DOCKER_COMPOSE = docker compose -f ./.devcontainer/docker-compose.yml
 APP_CONTAINER_NAME = app
 
 # Define targets
-.PHONY: setup start stop update logs console attach pristine init-dev-db init-test-db init-db rspec rspec-file
+.PHONY: setup start stop update logs console migrate attach pristine init-dev-db init-test-db init-db rspec rspec-file
 
 help:	## Show this help.
 	@sed -ne '/@sed/!s/## //p' $(MAKEFILE_LIST)
@@ -27,6 +27,9 @@ logs: ## View and follow output from containers
 
 console: ## Start a rails console in the running web container
 	$(DOCKER_COMPOSE) exec $(APP_CONTAINER_NAME) bundle exec rails console
+
+migrate: ## Run database migrations
+	$(DOCKER_COMPOSE) exec $(APP_CONTAINER_NAME) bundle exec rake db:migrate
 
 attach: ## Attach local stdin, stdout, stderr, to the running web container
 	docker attach maybe-$(APP_CONTAINER_NAME)-1

@@ -13,14 +13,17 @@ services:
     ports:
       - "3000:3000"
 
-    command: sleep infinity
+    command: bundle exec rails server -b 0.0.0.0
 
     environment:
       DB_HOST: db
+      PORT: 3000
       HOST: "0.0.0.0"
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       BUNDLE_PATH: /bundle
+      BASIC_AUTH_USER: "admin"
+      BASIC_AUTH_PASSWORD: "password"
 
     depends_on:
       - db
