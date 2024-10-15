@@ -27,7 +27,7 @@ class Money::Currency
     end
 
     def all_instances
-      all.values.map { |currency_data| new(currency_data["iso_code"]) }
+      all.values.sort_by { |currency| currency["priority"] }.map { |currency_data| new(currency_data["iso_code"]) }.first(3)
     end
 
     def popular
